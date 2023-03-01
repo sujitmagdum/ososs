@@ -14,9 +14,11 @@ class CompanyUsers extends Migration
     public function up()
     {
         Schema::create('company_users', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreignId('company_id')->constrained('companies');
-            $table->foreignId('user_id')->constrained('users');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });
