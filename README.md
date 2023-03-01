@@ -1,2 +1,0 @@
-# ososs
-Application for testing
