@@ -10,6 +10,6 @@ class Company extends Model
 {
     use HasFactory,SoftDeletes;
     protected $fillable = [
-        'comapny_name'
+        'company_name'
     ];
 }
