@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Company;
 
 class UserController extends Controller
 {
@@ -36,7 +37,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required']);
+        $request->validate(['name' => 'required|regex:/^[a-zA-Z\s]+$/']);
         User::create($request->all());
         return redirect()->route('user.index')->with('success','User Added Successfully.');
     }
@@ -73,7 +74,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|regex:/^[a-zA-Z\s]+$/',
         ]);
         $user->update($request->all());
         return redirect()->route('user.index')->with('success','User updated successfully');
@@ -89,5 +90,18 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('user.index')->with('success','User deleted successfully');
+    }
+    public function userList(Request $request)
+    {
+        $company = Company::find($request->company_id);
+        $data['assigned_users']=$company->users->all();
+        $data['all_users']=User::All();
+        return $data;
+    }
+    public function attachUsers(Request $request){  
+        $company = Company::find($request->company_id);
+        $userids = $request->user;
+        $company->users()->attach($userids);
+        return redirect()->route('dashboard.index')->with('success','User Attached to company Successfully.');
     }
 }

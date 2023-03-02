@@ -15,11 +15,8 @@ use App\Http\Controllers\DashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/dashboard', function () {
-//     return view('home');
-// });
-
 Route::resource('dashboard', DashboardController::class);
 Route::resource('company', CompanyController::class);
 Route::resource('user', UserController::class);
+Route::get("getuserlist", [UserController::class, 'userList']);
+Route::post("/attachusers", [UserController::class, 'attachUsers'])->name('user.attachusers');

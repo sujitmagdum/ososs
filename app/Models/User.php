@@ -20,6 +20,17 @@ class User extends Authenticatable
         'name'
     ];
 
+    public function companies()
+    {
+        return $this->belongsToMany('App\Models\Company')->withTimestamps();
+    }
+    // public static function boot() {
+    //     parent::boot();
+    //     static::deleting(function($user) { 
+    //          $user->companies()->delete();
+    //     });
+    // }
+
     /**
      * The attributes that should be hidden for arrays.
      *

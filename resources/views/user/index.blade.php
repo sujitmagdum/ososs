@@ -8,15 +8,9 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <a class="btn btn-success" href="{{ route('user.create') }}"> Add User</a>
-            </div>
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('dashboard.index') }}"> Back</a>
-            </div>
-        </div>
+    <div class="row mb-3 mt-2">
+            <a class="btn btn-success pull-left" href="{{ route('user.create') }}"> Add User</a>
+            <a class="btn btn-primary pull-right ml-2" href="{{ route('dashboard.index') }}"> Back</a>
     </div>
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -32,9 +26,9 @@
         </tr>
         @foreach ($users as $user)
         <tr>
-            <td>{{ ++$i }}</td>
+            <td>{{ $user->id }}</td>
             <td>{{ $user->name }}</td>
-            <td> <a class="btn btn-primary" href="{{ route('user.edit',$user->id) }}">Edit</a></td>
+            <td> <a class="btn btn-warning" href="{{ route('user.edit',$user->id) }}">Edit</a></td>
             <td>
                 <form action="{{ route('user.destroy',$user->id) }}" method="POST">
                     @csrf
