@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -13,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::latest()->paginate(5);
+        return view('user.index',compact('users'))->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -23,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -34,7 +36,9 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name' => 'required']);
+        User::create($request->all());
+        return redirect()->route('user.index')->with('success','User Added Successfully.');
     }
 
     /**
@@ -45,7 +49,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('user.show',compact('user'));
     }
 
     /**
@@ -54,9 +58,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('user.edit',compact('user'));
     }
 
     /**
@@ -66,9 +70,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+        $user->update($request->all());
+        return redirect()->route('user.index')->with('success','User updated successfully');
     }
 
     /**
@@ -77,8 +85,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('user.index')->with('success','User deleted successfully');
     }
 }
