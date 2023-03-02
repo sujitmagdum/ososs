@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +16,10 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/dashboard', function () {
+//     return view('home');
+// });
 
+Route::resource('dashboard', DashboardController::class);
 Route::resource('company', CompanyController::class);
 Route::resource('user', UserController::class);

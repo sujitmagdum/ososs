@@ -13,6 +13,9 @@
             <div class="pull-left">
                 <a class="btn btn-success" href="{{ route('company.create') }}"> Add Company</a>
             </div>
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{{ route('dashboard.index') }}"> Back</a>
+            </div>
         </div>
     </div>
     @if ($message = Session::get('success'))
